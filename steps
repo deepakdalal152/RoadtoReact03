@@ -1,0 +1,119 @@
+// module error means package is not installed properly
+
+1. npm init  or npm int -y
+
+2. package named as package.json will be created
+
+3. we will use package .json serve
+	go to npm and search for json-server
+
+		following steps from that page:-
+		// REST full form Representational State Transfer.
+		--
+Types of requests:
+get, post, delete, put, patch , option
+
+4. to install json server run command:- npm i json-server and confirm in package.json
+
+5. create database file named as db.json
+
+6.  lets create rest api in db.json file
+
+	{
+		"products":[]// this will store the product as an array
+
+	}
+7. create a new file which will handle server request named as server.js
+
+8. and copy  the data from github/RoadtoReact03/steps or below
+const PORT= 3000;
+const path = require('path');  // we call it import in es6
+const jsonServer = require('json-server');
+const server = jsonServer.create();
+const router = jsonServer.router(path.join(__dirname,'db.json'));
+const middlewares = jsonServer.defaults();
+server.use(middlewares);
+server.use(jsonServer.bodyParser);
+server.use('/api',router);
+server.listen(PORT,()=> console.log(`Json server is running on ${PORT}`))
+
+9. use node server.js to run the  jsonServer
+
+10. now go to browser and type localhost:3000
+// Note if you change the port we need to repeat step 9 again
+// localHOst ip is 127.0.0.1
+
+11. now  just to check your access  add a object in db.json>products:
+
+{
+	"products": [{
+	   "id":"1",
+	   "name": "Deepak"
+
+	}] 
+}
+
+12. go to server.js check rout path(hint:'/api'), dont forget to repeat step 9
+
+13. now go to browser ant type locahost:3000/api/products
+
+-----------------hurray: you can saw all the data from db.js---------
+
+14. let fetch the data from the database back again
+
+15. Create a folder FE for frontend
+16. create a index.html file
+17.  now create input to add product in json server
+// if we  go to live server we can see the index.html is running on diffrent server
+
+18. create object under async function and get value of input;
+      const data = {
+			"id": document.getElementById('id').value
+			"name" : document.getElementById('name').value
+	  	}
+19.  we need to data with the fetch > url{method,body,Headers} examples:-
+
+let data = 	await fetch('url', {
+					method:"POST",
+					body:JSON.stringfy(data),
+					headers:{'content-Type':'application/json'},
+				});
+	let dat = await data.json()
+20. to get data
+let data = 	await fetch('url');
+
+21. to delete request by ID
+
+	create an input to take the value of id
+	create async function
+	let id = document.getElementById('delete_id').value
+	let data = 	await fetch('url/${id}',{
+		method:"DELETE",
+		headers:{'content-Type':'application/json'}
+	});
+
+22. to patch request by ID
+// note: patch will add data modify sepcific data and
+// put will replace the data completly
+	
+	create an input to take the value of id
+	create async function
+	let id = document.getElementById('update_id').value
+	let data = 	await fetch('url'/${id},{
+		method:"PATCH", // "PUT"
+		body:JSON.stringify({
+			id:"3",
+			name:'ronaldo'
+		})
+		headers:{'content-Type':'application/json'}
+	});
+// note: when weve we are sending th e data we need method(delele, post etc),
+// body( data to be stringify)and header(content-Type) 
+
+// and for recive data we need method(delete, etc) and header(content-Type)
+
+
+
+
+
+
